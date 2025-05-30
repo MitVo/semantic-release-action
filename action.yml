@@ -61,7 +61,7 @@ runs:
         fi
         echo "release_version=${latest_tag}" >> $GITHUB_OUTPUT
 
-        echo "${nextRelease.notes}" > RELEASE_NOTES.md
+        tail -n +2 docs/CHANGELOG.md | awk '/^#/{exit} {print}' > RELEASE_NOTES.md
       shell: bash  
     - name: Upload release notes
       uses: actions/upload-artifact@v4
