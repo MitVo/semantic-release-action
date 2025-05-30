@@ -57,8 +57,8 @@ module.exports = {
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "mvn versions:set -DnewVersion=\"${nextRelease.version}\" && mvn clean install",
-        "successCmd": 'echo "Release ${nextRelease.version} published successfully"'
+        "prepareCmd": "mvn versions:set -DnewVersion=\"${process.env.RELEASE_TAG} || ${nextRelease.version}\" && mvn clean install && echo 'Release notes: ${nextRelease.notes}' > docs/RELEASE-NOTES.md",
+        "successCmd": 'echo "Release ${process.env.RELEASE_TAG} || ${nextRelease.version} published successfully"'
       }
     ],
     [
@@ -76,10 +76,9 @@ module.exports = {
           "docs/CHANGELOG.md"
         ],
         message: [
-          ':bookmark: ${nextRelease.version} [skip ci]'
+          ':bookmark: ${process.env.RELEASE_TAG} || ${nextRelease.version} [skip ci]'
         ].join('')
       }
     ]
-  ],
-  tagFormat: '${version}', // By default it use v0.0.0 if its not defined
+  ]
 }

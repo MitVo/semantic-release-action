@@ -12,6 +12,10 @@ inputs:
   maven_settings_path:
     description: 'Path to Maven settings.xml (if needed)'
     required: false
+  release_tag:
+    description: 'Tag to use for the release (optional, defaults to latest tag)'
+    required: false
+    default: ''  
 outputs:
   release_version:
     description: 'The version of the release created by semantic-release'  
@@ -45,7 +49,15 @@ runs:
         MAVEN_SETTINGS_PATH: ${{ inputs.maven_settings_path }}
       run: |
         cd ${{ github.workspace }}
-        npx semantic-release 
-        latest_tag=$(git describe --tags --abbrev=0)
+        if [ -n "${{ inputs.release_tag }}" ]; then
+          echo "Using provided release tag: ${{ inputs.release_tag }}"
+          latest_tag=${{ inputs.release_tag }}
+          # Run semantic-release in dry-run to ONLY SHOW release notes, etc., but not create a tag
+          npx semantic-release --dry-run
+        else
+          echo "No release tag provided, using latest tag from git"
+          npx semantic-release
+          latest_tag=$(git describe --tags --abbrev=0)
+        fi
         echo "release_version=${latest_tag}" >> $GITHUB_OUTPUT
       shell: bash  
