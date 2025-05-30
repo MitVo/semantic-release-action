@@ -64,7 +64,7 @@ runs:
         echo "release_version=${latest_tag}" >> $GITHUB_OUTPUT
 
         cat docs/CHANGELOG.md || echo "No changelog found."
-        tail -n +2 docs/CHANGELOG.md | awk '/^#/{exit} {print}' > RELEASE_NOTES.md
+        tail -n +2 docs/CHANGELOG.md | awk '/^#/{exit} {print}' > "${{ github.workspace }}/RELEASE_NOTES.md"
 
         # Set release notes as output
         release_notes_content=$(cat RELEASE_NOTES.md)
