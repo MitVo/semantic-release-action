@@ -67,7 +67,7 @@ runs:
         tail -n +2 docs/CHANGELOG.md | awk '/^#/{exit} {print}' > "${{ github.workspace }}/RELEASE_NOTES.md"
 
         # Set release notes as output
-        release_notes_content=$(cat RELEASE_NOTES.md)
+        release_notes_content=$(cat "${{ github.workspace }}/RELEASE_NOTES.md")
         release_notes_content="${release_notes_content//'%'/'%25'}"
         release_notes_content="${release_notes_content//$'\n'/'%0A'}"
         release_notes_content="${release_notes_content//$'\r'/'%0D'}"
