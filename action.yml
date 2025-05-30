@@ -78,4 +78,4 @@ runs:
       uses: actions/upload-artifact@v4
       with:
         name: release-notes
-        path: ${{env.GITHUB_WORKSPACE}}/RELEASE_NOTES.md
+        path: ${{ github.workspace }}/RELEASE_NOTES.md
