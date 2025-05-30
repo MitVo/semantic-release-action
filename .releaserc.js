@@ -57,7 +57,7 @@ module.exports = {
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "mvn versions:set -DnewVersion=\"${process.env.RELEASE_TAG} || ${nextRelease.version}\" && mvn clean install && echo 'Release notes: ${nextRelease.notes}' > docs/RELEASE-NOTES.md",
+        "prepareCmd": "mvn versions:set -DnewVersion=\"${process.env.RELEASE_TAG} || ${nextRelease.version}\" && mvn clean install",
         "successCmd": 'echo "Release ${process.env.RELEASE_TAG} || ${nextRelease.version} published successfully"'
       }
     ],
