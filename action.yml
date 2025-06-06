@@ -1,5 +1,5 @@
-name: 'Custom Semantic Release for Java'
-description: 'A customized GitHub Action to run semantic-release for Java projects'
+name: 'Custom Semantic Release for Python'
+description: 'A customized GitHub Action to run semantic-release for Python projects'
 author: 'Your Name or Organization'
 inputs:
   github_token:
@@ -9,9 +9,9 @@ inputs:
     description: 'Branch to perform the release from'
     required: false
     default: 'master'
-  maven_settings_path:
-    description: 'Path to Maven settings.xml (if needed)'
-    required: false
+  module_name:
+    description: 'Name of the Maven module to release'
+    required: true
 outputs:
   release_version:
     description: 'The version of the release created by semantic-release'  
@@ -42,7 +42,7 @@ runs:
       id: semantic_release
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
-        MAVEN_SETTINGS_PATH: ${{ inputs.maven_settings_path }}
+        MODULE: ${{ inputs.module_name }}
       run: |
         cd ${{ github.workspace }}
         npx semantic-release 
