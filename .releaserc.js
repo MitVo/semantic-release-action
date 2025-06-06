@@ -57,14 +57,15 @@ module.exports = {
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "mvn versions:set -DnewVersion=\"${nextRelease.version}\" && mvn clean install",
+        "prepareCmd": "python scripts/prepare_release.py ${nextRelease.version} ${nextRelease.gitTag} && python -m build",
+        "publishCmd": "twine upload dist/* ",
         "successCmd": 'echo "Release ${nextRelease.version} published successfully"'
       }
     ],
     [
       "@semantic-release/changelog",
       {
-        "changelogFile": "docs/CHANGELOG.md",
+        "changelogFile": "CHANGELOG.md",
         "changelogTitle": ['# Gitmoji Changelog', process.env.REPO_NAME, '\uD83C\uDF88'].join(' ')
       }
     ],
@@ -72,8 +73,8 @@ module.exports = {
       "@semantic-release/git",
       {
         assets: [
-          "**/pom.xml",
-          "docs/CHANGELOG.md"
+          "setup.py",
+          "CHANGELOG.md"
         ],
         message: [
           ':bookmark: ${nextRelease.version} [skip ci]'
