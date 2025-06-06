@@ -57,7 +57,8 @@ module.exports = {
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "sed -i 's/version=.*/version=\"${nextRelease.version}\"/' setup.py && python -m compileall " + process.env.MODULE,
+        "prepareCmd": "sed -i 's/version=.*/version=\"${nextRelease.version}\"/' setup.py && python -m build",
+        "publishCmd": "twine upload dist/* ",
         "successCmd": 'echo "Release ${nextRelease.version} published successfully"'
       }
     ],
@@ -73,7 +74,8 @@ module.exports = {
       {
         assets: [
           "setup.py",
-          "CHANGELOG.md"
+          "CHANGELOG.md",
+          "pyproject.toml",
         ],
         message: [
           ':bookmark: ${nextRelease.version} [skip ci]'

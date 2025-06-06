@@ -12,6 +12,13 @@ inputs:
   module_name:
     description: 'Name of the Maven module to release'
     required: true
+  pypi_token:
+    description: 'PyPI token for publishing packages (required for Python projects)'
+    required: true 
+  pypi_username:
+    description: 'PyPI username for publishing packages (required for Python projects)'
+    required: false
+    default: '__token__'  # Default value for PyPI username   
 outputs:
   release_version:
     description: 'The version of the release created by semantic-release'  
@@ -43,6 +50,8 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
         MODULE: ${{ inputs.module_name }}
+        PYPI_TOKEN: ${{ inputs.pypi_token }}
+        PYPI_USERNAME: ${{ inputs.pypi_username }}
       run: |
         cd ${{ github.workspace }}
         npx semantic-release 
