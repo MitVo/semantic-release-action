@@ -57,7 +57,7 @@ module.exports = {
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "sed -i 's/version=.*/version\"${nextRelease.version}\"/' setup.py && python -m compileall " + process.env.MODULE,
+        "prepareCmd": "sed -i 's/version=.*/version=\"${nextRelease.version}\"/' setup.py && python -m compileall " + process.env.MODULE,
         "successCmd": 'echo "Release ${nextRelease.version} published successfully"'
       }
     ],
